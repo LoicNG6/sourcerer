@@ -8,7 +8,11 @@ import GeneraleInformation from "./Components/GeneraleInformation";
 //import LanguageInformation from "./Components/Language";
 import Ex from "./Components/Language";
 import LanguageInformation from "./Components/Language";
+
+const a = <LanguageInformation.GetList.Language0.Color />;
+console.log("a = ", a);
 class Application extends React.Component {
+
   render() {
     return (
 
@@ -78,16 +82,20 @@ class Application extends React.Component {
               </Row>
               <Row style={style.Row.Normal}>
                 <Col style={style.Row.Contain}>
-                  <LanguageInformation.GetList.Language0 />
+                  <LanguageInformation.GetList.Language0.Color />
+                  <LanguageInformation.GetList.Language0.Name />
                 </Col>
                 <Col style={style.Row.Contain}>
-                  <LanguageInformation.GetList.Language1 />
+                  <LanguageInformation.GetList.Language1.Color />
+                  <LanguageInformation.GetList.Language1.Name />
                 </Col>
                 <Col style={style.Row.Contain}>
-                  <LanguageInformation.GetList.Language2 />
+                  <LanguageInformation.GetList.Language2.Color />
+                  <LanguageInformation.GetList.Language2.Name />
                 </Col>
                 <Col style={style.Row.Contain}>
-                  <LanguageInformation.GetList.Language3 />
+                  <LanguageInformation.GetList.Language3.Color />
+                  <LanguageInformation.GetList.Language3.Name />
                 </Col>
               </Row>
             </Col>

@@ -1,247 +1,138 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { setConfiguration } from 'react-grid-system';
-import { Container, Row, Col } from 'react-grid-system';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
-} from "@apollo/client";
-import { GraphQLID } from 'graphql';
-import { findByLabelText } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
+import style from "./Components/style";
+import { Container, Row, Col } from "react-grid-system";
 
-setConfiguration({ maxScreenClass: 'xl' });
+//Request class imports
+import GeneraleInformation from "./Components/GeneraleInformation";
+//import LanguageInformation from "./Components/Language";
+import Ex from "./Components/Language";
+import LanguageInformation from "./Components/Language";
+class Application extends React.Component {
+  render() {
+    return (
 
-const client = new ApolloClient({
-  uri: 'https://api.github.com/graphql',
-  cache: new InMemoryCache(),
-  headers: {
-    Authorization: "Bearer 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"
-  },
-});
+      <div>
+        {/*----------------------------------------------Entête---------------------------------------------------------------------------*/}
+        <Container style={{ border: "solid", marginBottom: 10 }}>
 
-// const client content all requests found in the console
-client
-  .query({
-    query: gql`
-      query {
-        viewer {
-          login
-          followers {
-            totalCount
-          }
-          contributionsCollection {
-            totalCommitContributions
-          }
-          repositories {
-            totalCount
-          }
-          bio
-          avatarUrl
-          
-          contributionsCollection {
-            contributionYears
-            totalRepositoryContributions
-            endedAt
-          }
-          repositoriesContributedTo(first: 10) {
-            totalCount
-          }
-        }        
-      }
-    `
-  })
-  .then(result => console.log(result));
+          {/*----------------------------------------------Les informations générales--------------------------------------------------------*/}
 
-const requests = gql`
-  query {
-    viewer { 
-      login
-    }
-  }
-`;
-
-function GetUserName() {
-  const { loading, error, data } = useQuery(requests);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return (
-    <div>
-      <p>
-        {data.viewer.login}
-      </p>
-    </div>
-  );
-}
+          <Row style={style.Row.Normal}>
+            <Col sm={2} style={style.Column}>
+              <GeneraleInformation.GetLogin /> <br />
+              <GeneraleInformation.GetName /> <br />
+              <GeneraleInformation.GetBio />
+              <Row style={style.Row.Normal}>
+                <Col style={{ border: 'solid', borderRadius: 60, paddingBlock: 15 }}>
+                  <img src={<GeneraleInformation.GetAvatar />} alt="Logo" />
+                </Col>
+              </Row>
+            </Col>
+            <Col sm={2} style={style.Column}>
+              <Row style={style.Label}>Commits</Row>
+              <Row style={style.Row.Contain}>
+                <GeneraleInformation.GetTotalOfCommit />
+              </Row>
+            </Col>
+            <Col sm={2} style={style.Column}>
+              <Row style={style.Label}>Repos</Row>
+              <Row style={style.Row.Contain}>
+                <GeneraleInformation.GetTotalOfRepository />
+              </Row>
+            </Col>
+            <Col sm={2} style={style.Column}>
+              <Row style={style.Label}>Lines of code (Le nombre total de ligne de code)</Row>
+              <Row style={style.Row.Contain}>
+                "Values"
+              </Row>
+            </Col>
+            <Col sm={2} style={style.Column}>
+              <Row style={style.Label}>Followers</Row>
+              <Row style={style.Row.Contain}>
+                <GeneraleInformation.GetFollowers />
+              </Row>
+            </Col>
+            <Col sm={2} style={style.Column}>
+              <Row style={style.Label}>Following</Row>
+              <Row style={style.Row.Contain}>
+                <GeneraleInformation.GetFollowing />
+              </Row>
+            </Col>
+          </Row>
 
 
-function App() {
-  const container_Style = {
-    border: "solid",
-    marginBottom: 10,
-    display: "grid",
-  };
-  const item_container_Style = {
-    border: "solid"
-  };
-  const cols_style = {
-    border: "solid",
-    backgroundColor: "lightblue",
-  };
-  const rows_style = {
-    border: "solid",
-    margin: 10,
-    padding: 10,
-  };
-  const contain_row_style = {
-    backgroundColor: 'LightGray',
-    margin: 10,
-    padding: 10,
-    height: "auto",
-  };
-  const contain_label_style = {
-    width:90,
-    height:90,
-    border:"solid",
-  }
+          <Row style={style.Row.Normal}>
 
+            {/*----------------------------------------------Overview--------------------------------------------------------------------------*/}
+            <Col sm={12} style={{ border: 'solid' }}>
+              <Row style={style.Row.Normal}>
+                <Col style={style.Column}>
+                  <h2>Overview</h2>
+                  Diagrame décrivant la proportion d'utilisation des langages durant une période données
+                </Col>
+                <Col style={style.Column}>
+                  Nombre de repos
+                  Last updated
+                </Col>
+              </Row>
+              <Row style={style.Row.Normal}>
+                <Col style={style.Row.Contain}>
+                  <LanguageInformation.GetList.Language0 />
+                </Col>
+                <Col style={style.Row.Contain}>
+                  <LanguageInformation.GetList.Language1 />
+                </Col>
+                <Col style={style.Row.Contain}>
+                  <LanguageInformation.GetList.Language2 />
+                </Col>
+                <Col style={style.Row.Contain}>
+                  <LanguageInformation.GetList.Language3 />
+                </Col>
+              </Row>
+            </Col>
 
-  return (
-    <div>
-      {/*----------------------------------------------Entête---------------------------------------------------------------------------*/}
-      <Container style={{ border: "solid", marginBottom: 10 }}>
+            {/*----------------------------------------------Langages--------------------------------------------------------------------------*/}
+            <Col sm={12} style={{ border: 'solid' }}>
+              <Row style={style.Row.Normal}>
+                <Col style={style.Column}>
+                  <h2>Languages</h2>
+                  Nom des langage + Commit par langage + Loc (voir ce que ça signifie) par langage
+                  <Row>
+                    <Col style={style.Row.Contain}>
+                      Langage 1
+                      <Row style={{ backgroundColor: "lightgreen" }}>Nombre de commit </Row>
+                      Nombre de Loc
+                    </Col>
+                    <Col style={style.Row.Contain}></Col>
+                  </Row>
+                </Col>
+                <Col style={style.Column}>
+                  Fromage représentant la part d'activité par langage
+                </Col>
+              </Row>
+            </Col>
 
-        {/*----------------------------------------------Les informatiionns générales--------------------------------------------------------*/}
+            {/*----------------------------------------------Repository------------------------------------------------------------------------*/}
+            <Col sm={12} style={{ border: 'solid' }}>
+              <Row style={style.Row.Normal}>
+                <Col style={style.Column}> <h2> Repositories</h2> </Col>
+                <Col style={style.Column}> compte des repositories + lastUpdate (date + heure)</Col>
+              </Row>
+              <Row style={style.Row.Normal}>
+                Tableau (Liste des repositories)
+              </Row>
+            </Col>
 
-        <Row style={rows_style}>
-          <Col sm={2} style={cols_style}>
-            Username + Nom complet
-            <Row style={rows_style}>
-              <Col style={{ border: 'solid', borderRadius: 60, paddingBlock: 15 }}>
-                Avatar (Les contours devront etre arrondis)
-              </Col>
-            </Row>
-          </Col>
-          <Col sm={2} style={cols_style}>
-            <Row style={contain_label_style}>Commits (le nombre de commit)</Row>
-            <Row style={contain_row_style}>
-              "Values"
-            </Row>
-          </Col>
-          <Col sm={2} style={cols_style}>
-            <Row style={contain_label_style}>Repos (Le nombre total de repository)</Row>
-            <Row style={contain_row_style}>
-              "Values"
-            </Row>
-          </Col>
-          <Col sm={2} style={cols_style}>
-            <Row style={contain_label_style}>Lines of code (Le nombre total de ligne de code)</Row>
-            <Row style={contain_row_style}>
-              "Values"
-            </Row>
-          </Col>
-          <Col sm={2} style={cols_style}>
-            <Row style={contain_label_style}>Followers</Row>
-            <Row style={contain_row_style}>
-              "Values"
-            </Row>
-          </Col>
-          <Col sm={2} style={cols_style}>
-            <Row style={contain_label_style}>Following</Row>
-            <Row style={contain_row_style}>
-              "Values"
-            </Row>
-          </Col>
-        </Row>
+          </Row>
 
-
-        <Row style={rows_style}>
-
-          {/*----------------------------------------------Overview--------------------------------------------------------------------------*/}
-          <Col sm={12} style={{ border: 'solid' }}>
-            <Row style={rows_style}>
-              <Col style={cols_style}>
-                <h2>Overview</h2>
-                Diagrame décrivant la proportion d'utilisation des langages durant une période données
-              </Col>
-              <Col style={cols_style}>
-                Nombre de repos
-                Last updated
-              </Col>
-            </Row>
-            <Row style={rows_style}>
-              <Col style={contain_row_style}>Langage 1</Col>
-              <Col style={contain_row_style}>Langage 2</Col>
-              <Col style={contain_row_style}>Langage 3</Col>
-              <Col style={contain_row_style}>Langage 4</Col>
-            </Row>
-          </Col>
-
-          {/*----------------------------------------------Langages--------------------------------------------------------------------------*/}
-          <Col sm={12} style={{ border: 'solid' }}>
-            <Row style={rows_style}>
-              <Col style={cols_style}>
-                <h2>Languages</h2>
-                Nom des langage + Commit par langage + Loc (voir ce que ça signifie) par langage
-                <Row>
-                  <Col style={contain_row_style}>
-                    Langage 1
-                    <Row style={{backgroundColor:"lightgreen"}}>Nombre de commit </Row>
-                    Nombre de Loc
-                  </Col>
-                  <Col style={contain_row_style}></Col>
-                </Row>
-              </Col>
-              <Col style={cols_style}>
-                Fromage représentant la part d'activité par langage
-              </Col>
-            </Row>
-          </Col>
-
-          {/*----------------------------------------------Repository------------------------------------------------------------------------*/}
-          <Col sm={12} style={{ border: 'solid' }}>
-            <Row style={rows_style}>
-              <Col style={cols_style}> <h2> Repositories</h2> </Col>
-              <Col style={cols_style}> compte des repositories + lastUpdate (date + heure)</Col>
-            </Row>
-            <Row style={rows_style}>
-              Tableau (Liste des repositories)
-            </Row>
-          </Col>
-
-        </Row>
-
-      </Container>
-
-      <div style={container_Style}>
-        Share your profile on :
-        <span>
-          <a href="ideal link">aedin</a>
-        </span>
-        <span>
-          <a href="ideal link">Twitter</a>
-        </span>
-        <span>
-          <a href="ideal link">Facebook</a>
-        </span>
-        <span>
-          <a href="ideal link">Get Html</a>
-        </span>
+        </Container>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-
-
 render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <Application />,
   document.getElementById('root'),
 );
 

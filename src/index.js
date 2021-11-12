@@ -3,14 +3,10 @@ import { render } from "@testing-library/react";
 import style from "./Components/style";
 import { Container, Row, Col } from "react-grid-system";
 
-//Request class imports
 import GeneraleInformation from "./Components/GeneraleInformation";
-//import LanguageInformation from "./Components/Language";
-import Ex from "./Components/Language";
+
 import LanguageInformation from "./Components/Language";
 
-const a = <LanguageInformation.GetList.Language0.Color />;
-console.log("a = ", a);
 class Application extends React.Component {
 
   render() {
